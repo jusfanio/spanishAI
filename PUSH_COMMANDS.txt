@@ -1,0 +1,17 @@
+Run these commands in Terminal to push your files:
+
+cd /Users/alesia/Downloads/assets-hub
+git remote add origin https://github.com/jusfanio/SpanishAI.git
+git push -u origin main
+
+When prompted for username: enter "jusfanio"
+When prompted for password: paste your GitHub Personal Access Token
+(Generate one at: https://github.com/settings/tokens - select "repo" scope)
+
+After pushing:
+1. Go to https://github.com/jusfanio/SpanishAI
+2. Click Settings → Pages
+3. Select branch: main, folder: / (root)
+4. Click Save
+5. Your site will be at: https://jusfanio.github.io/SpanishAI/
+

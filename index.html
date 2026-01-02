@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Learning Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇪🇸 Spanish Learning Tool</h1>
+            <p class="subtitle">Master Spanish vocabulary, verbs, and more!</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="flashcards">Flashcards</button>
+            <button class="tab-btn" data-tab="quiz">Quiz</button>
+            <button class="tab-btn" data-tab="verbs">Verb Conjugation</button>
+            <button class="tab-btn" data-tab="progress">Progress</button>
+        </div>
+
+        <!-- Flashcards Tab -->
+        <div class="tab-content active" id="flashcards">
+            <div class="card-container">
+                <div class="flashcard" id="flashcard">
+                    <div class="card-front">
+                        <h2 id="card-word">Click "Start" to begin</h2>
+                        <p class="card-hint">Click to flip</p>
+                    </div>
+                    <div class="card-back">
+                        <h2 id="card-translation">Translation</h2>
+                        <p id="card-example" class="card-example"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="start-btn" class="btn btn-primary">Start Learning</button>
+                <button id="next-btn" class="btn btn-secondary" style="display: none;">Next Card</button>
+                <button id="flip-btn" class="btn btn-secondary" style="display: none;">Flip Card</button>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text" id="progress-text">0 / 0 cards</p>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="quiz">
+            <div class="quiz-container">
+                <div class="quiz-question" id="quiz-question">
+                    <h2>Ready to test your knowledge?</h2>
+                    <p>Click "Start Quiz" to begin</p>
+                </div>
+                <div class="quiz-options" id="quiz-options"></div>
+                <div class="quiz-feedback" id="quiz-feedback"></div>
+            </div>
+            <div class="quiz-controls">
+                <button id="start-quiz-btn" class="btn btn-primary">Start Quiz</button>
+                <button id="next-quiz-btn" class="btn btn-secondary" style="display: none;">Next Question</button>
+            </div>
+            <div class="quiz-score">
+                <p>Score: <span id="quiz-score">0</span> / <span id="quiz-total">0</span></p>
+            </div>
+        </div>
+
+        <!-- Verb Conjugation Tab -->
+        <div class="tab-content" id="verbs">
+            <div class="verb-selector">
+                <label for="verb-select">Select a verb:</label>
+                <select id="verb-select" class="select-input">
+                    <option value="">Choose a verb...</option>
+                </select>
+            </div>
+            <div class="verb-conjugation" id="verb-conjugation">
+                <p class="verb-placeholder">Select a verb to see its conjugations</p>
+            </div>
+            <div class="tense-selector">
+                <label>Select tense:</label>
+                <div class="tense-buttons">
+                    <button class="tense-btn active" data-tense="presente">Present</button>
+                    <button class="tense-btn" data-tense="preterito">Preterite</button>
+                    <button class="tense-btn" data-tense="futuro">Future</button>
+                    <button class="tense-btn" data-tense="imperfecto">Imperfect</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div class="tab-content" id="progress">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Cards Studied</h3>
+                    <p class="stat-number" id="stat-cards">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Quiz Score</h3>
+                    <p class="stat-number" id="stat-quiz">0%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Verbs Learned</h3>
+                    <p class="stat-number" id="stat-verbs">0</p>
+                </div>
+            </div>
+            <div class="reset-section">
+                <button id="reset-btn" class="btn btn-danger">Reset Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
