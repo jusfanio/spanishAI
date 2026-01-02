@@ -10,7 +10,7 @@
     <div class="container">
         <header>
             <h1>🇪🇸 Spanish Learning Tool</h1>
-            <p class="subtitle">Master Spanish vocabulary, verbs, and more!</p>
+            <p class="subtitle">Daily Practice: 30 random words each session!</p>
         </header>
 
         <div class="tabs">
@@ -26,23 +26,29 @@
                 <div class="flashcard" id="flashcard">
                     <div class="card-front">
                         <h2 id="card-word">Click "Start" to begin</h2>
+                        <button id="audio-btn-front" class="audio-btn" style="display: none;" title="Play pronunciation">
+                            🔊
+                        </button>
                         <p class="card-hint">Click to flip</p>
                     </div>
                     <div class="card-back">
                         <h2 id="card-translation">Translation</h2>
+                        <button id="audio-btn-back" class="audio-btn" style="display: none;" title="Play pronunciation">
+                            🔊
+                        </button>
                         <p id="card-example" class="card-example"></p>
                     </div>
                 </div>
             </div>
             <div class="controls">
-                <button id="start-btn" class="btn btn-primary">Start Learning</button>
+                <button id="start-btn" class="btn btn-primary">Start Daily Practice (30 words)</button>
                 <button id="next-btn" class="btn btn-secondary" style="display: none;">Next Card</button>
                 <button id="flip-btn" class="btn btn-secondary" style="display: none;">Flip Card</button>
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
-            <p class="progress-text" id="progress-text">0 / 0 cards</p>
+            <p class="progress-text" id="progress-text">Daily Practice: 0 / 30 cards</p>
         </div>
 
         <!-- Quiz Tab -->
