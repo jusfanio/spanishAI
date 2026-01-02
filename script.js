@@ -340,6 +340,76 @@ function saveStats() {
     localStorage.setItem('spanishLearningStats', JSON.stringify(toSave));
 }
 
+// Audio pronunciation function with feminine voice
+function speakSpanish(text) {
+    if ('speechSynthesis' in window) {
+        // Stop any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        // Function to actually speak with voice selection
+        const doSpeak = () => {
+            const voices = window.speechSynthesis.getVoices();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES'; // Spanish (Spain) accent
+            utterance.rate = 0.85; // Slightly slower for clarity
+            utterance.pitch = 1.4; // Higher pitch for more feminine sound
+            utterance.volume = 1;
+            
+            // Get all Spanish voices
+            const spanishVoices = voices.filter(voice => 
+                voice.lang.startsWith('es') || voice.lang.includes('Spanish')
+            );
+            
+            // Try to find a female voice - check multiple criteria
+            let femaleVoice = null;
+            
+            // First, try to find by gender property
+            femaleVoice = spanishVoices.find(voice => voice.gender === 'female');
+            
+            // If not found, try by name patterns
+            if (!femaleVoice) {
+                const femaleNames = ['maria', 'helena', 'monica', 'carmen', 'lola', 'sofia', 'isabel', 'ana', 'lucia', 'elena'];
+                femaleVoice = spanishVoices.find(voice => 
+                    femaleNames.some(name => voice.name.toLowerCase().includes(name))
+                );
+            }
+            
+            // If still not found, try by checking if name contains "female" or "mujer"
+            if (!femaleVoice) {
+                femaleVoice = spanishVoices.find(voice => 
+                    voice.name.toLowerCase().includes('female') || 
+                    voice.name.toLowerCase().includes('mujer') ||
+                    voice.name.toLowerCase().includes('woman')
+                );
+            }
+            
+            // If we found a female voice, use it
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            } else if (spanishVoices.length > 0) {
+                // Use any Spanish voice but with higher pitch
+                utterance.voice = spanishVoices[0];
+                utterance.pitch = 1.5; // Even higher pitch to make it sound more feminine
+            }
+            
+            window.speechSynthesis.speak(utterance);
+        };
+        
+        // Check if voices are loaded
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length === 0) {
+            // Voices not loaded yet, wait for them
+            window.speechSynthesis.onvoiceschanged = () => {
+                doSpeak();
+            };
+        } else {
+            doSpeak();
+        }
+    } else {
+        alert('Your browser does not support text-to-speech. Please use a modern browser.');
+    }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadStats();
@@ -348,6 +418,17 @@ document.addEventListener('DOMContentLoaded', () => {
     setupQuiz();
     setupVerbs();
     updateProgress();
+    
+    // Load voices on page load (helps with voice selection)
+    if ('speechSynthesis' in window) {
+        // Trigger voice loading
+        const loadVoices = () => {
+            const voices = window.speechSynthesis.getVoices();
+            console.log('Available Spanish voices:', voices.filter(v => v.lang.startsWith('es')));
+        };
+        loadVoices();
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
 });
 
 // Tab switching
@@ -378,15 +459,44 @@ function setupFlashcards() {
     const startBtn = document.getElementById('start-btn');
     const nextBtn = document.getElementById('next-btn');
     const flipBtn = document.getElementById('flip-btn');
+    const audioBtnFront = document.getElementById('audio-btn-front');
+    const audioBtnBack = document.getElementById('audio-btn-back');
 
     startBtn.addEventListener('click', startFlashcards);
     nextBtn.addEventListener('click', nextCard);
     flipBtn.addEventListener('click', flipCard);
     flashcard.addEventListener('click', flipCard);
+    
+    // Audio button handlers
+    audioBtnFront.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card flip
+        const word = document.getElementById('card-word').textContent;
+        if (word && word !== 'Click "Start" to begin') {
+            speakSpanish(word);
+        }
+    });
+    
+    audioBtnBack.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card flip
+        const word = document.getElementById('card-word').textContent;
+        if (word && word !== 'Click "Start" to begin') {
+            speakSpanish(word);
+        }
+    });
 }
 
 function startFlashcards() {
-    shuffledVocabulary = [...vocabulary].sort(() => Math.random() - 0.5);
+    // Daily Practice: Randomly select 30 words from vocabulary
+    const dailyPracticeSize = 30;
+    const shuffledAll = [...vocabulary].sort(() => Math.random() - 0.5);
+    
+    // If we have more than 30 words, select 30 random ones
+    // If we have fewer, use all available words
+    shuffledVocabulary = shuffledAll.slice(0, Math.min(dailyPracticeSize, shuffledAll.length));
+    
+    // Shuffle the selected words again for variety
+    shuffledVocabulary = shuffledVocabulary.sort(() => Math.random() - 0.5);
+    
     currentCardIndex = 0;
     stats.cardsStudied = 0;
     showCard();
@@ -401,6 +511,8 @@ function showCard() {
         document.getElementById('card-word').textContent = '¡Felicidades! You finished all cards!';
         document.getElementById('card-translation').textContent = '';
         document.getElementById('card-example').textContent = '';
+        document.getElementById('audio-btn-front').style.display = 'none';
+        document.getElementById('audio-btn-back').style.display = 'none';
         return;
     }
 
@@ -411,6 +523,10 @@ function showCard() {
     document.getElementById('card-word').textContent = card.word;
     document.getElementById('card-translation').textContent = card.translation;
     document.getElementById('card-example').textContent = card.example;
+    
+    // Show audio buttons
+    document.getElementById('audio-btn-front').style.display = 'inline-block';
+    document.getElementById('audio-btn-back').style.display = 'inline-block';
     
     updateFlashcardProgress();
 }
@@ -430,7 +546,7 @@ function nextCard() {
 function updateFlashcardProgress() {
     const progress = ((currentCardIndex + 1) / shuffledVocabulary.length) * 100;
     document.getElementById('progress-fill').style.width = progress + '%';
-    document.getElementById('progress-text').textContent = `${currentCardIndex + 1} / ${shuffledVocabulary.length} cards`;
+    document.getElementById('progress-text').textContent = `Daily Practice: ${currentCardIndex + 1} / ${shuffledVocabulary.length} cards`;
 }
 
 // Quiz functionality
@@ -489,9 +605,16 @@ function showQuizQuestion() {
     
     const allAnswers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
     
-    document.getElementById('quiz-question').innerHTML = `
+    const questionDiv = document.getElementById('quiz-question');
+    questionDiv.innerHTML = `
         <h2>What does "${question.word}" mean?</h2>
+        <button class="audio-btn quiz-audio-btn" id="quiz-audio-btn" title="Play pronunciation">🔊</button>
     `;
+    
+    // Add audio button handler
+    document.getElementById('quiz-audio-btn').addEventListener('click', () => {
+        speakSpanish(question.word);
+    });
     
     const optionsDiv = document.getElementById('quiz-options');
     optionsDiv.innerHTML = '';
