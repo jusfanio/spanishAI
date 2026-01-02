@@ -179,6 +179,30 @@ header h1 {
     text-align: center;
 }
 
+.audio-btn {
+    background: #0066cc;
+    color: #ffffff;
+    border: 2px solid #0066cc;
+    border-radius: 0;
+    padding: 8px 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s;
+}
+
+.audio-btn:hover {
+    background: #0052a3;
+    border-color: #0052a3;
+    transform: scale(1.1);
+}
+
+.quiz-audio-btn {
+    margin-top: 15px;
+    display: inline-block;
+}
+
 .controls {
     display: flex;
     justify-content: center;
