@@ -5,32 +5,55 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+    background: #000000;
     min-height: 100vh;
     padding: 20px;
-    color: #333;
+    color: #ffffff;
+    position: relative;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 20px,
+        rgba(255,255,255,0.03) 20px,
+        rgba(255,255,255,0.03) 21px
+    );
+    pointer-events: none;
+    z-index: 0;
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: #000000;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
 
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
     color: white;
     padding: 30px;
     text-align: center;
+    border-bottom: 2px dashed #ffffff;
 }
 
 header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
 }
 
 .subtitle {
@@ -40,8 +63,8 @@ header h1 {
 
 .tabs {
     display: flex;
-    background: #f5f5f5;
-    border-bottom: 2px solid #e0e0e0;
+    background: #000000;
+    border-bottom: 2px dashed #ffffff;
 }
 
 .tab-btn {
@@ -52,25 +75,33 @@ header h1 {
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
-    color: #666;
+    color: #ffffff;
     transition: all 0.3s;
+    border-right: 1px dashed #ffffff;
+    font-family: 'Courier New', monospace;
+}
+
+.tab-btn:last-child {
+    border-right: none;
 }
 
 .tab-btn:hover {
-    background: #e8e8e8;
-    color: #667eea;
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
 }
 
 .tab-btn.active {
-    background: white;
-    color: #667eea;
-    border-bottom: 3px solid #667eea;
+    background: rgba(255,255,255,0.2);
+    color: #ffffff;
+    border-bottom: 2px dashed #ffffff;
 }
 
 .tab-content {
     display: none;
     padding: 30px;
     min-height: 400px;
+    background: #000000;
+    color: #ffffff;
 }
 
 .tab-content.active {
@@ -105,22 +136,24 @@ header h1 {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 15px;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
+    background: #000000;
 }
 
 .card-front {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
     color: white;
 }
 
 .card-back {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: #1a1a1a;
     color: white;
     transform: rotateY(180deg);
 }
@@ -130,6 +163,7 @@ header h1 {
     font-size: 2.5em;
     margin-bottom: 15px;
     text-align: center;
+    font-family: 'Courier New', monospace;
 }
 
 .card-hint {
@@ -154,64 +188,78 @@ header h1 {
 
 .btn {
     padding: 12px 30px;
-    border: none;
-    border-radius: 25px;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    font-family: 'Courier New', monospace;
+    position: relative;
+}
+
+.btn::after {
+    content: ' >';
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: #0066cc;
+    color: #ffffff;
+    border: 2px solid #0066cc;
 }
 
 .btn-primary:hover {
+    background: #0052a3;
+    border-color: #0052a3;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: #333333;
+    color: #ffffff;
+    border: 2px solid #333333;
 }
 
 .btn-secondary:hover {
-    background: #5a6268;
+    background: #555555;
+    border-color: #555555;
     transform: translateY(-2px);
 }
 
 .btn-danger {
     background: #dc3545;
-    color: white;
+    color: #ffffff;
+    border: 2px solid #dc3545;
 }
 
 .btn-danger:hover {
     background: #c82333;
+    border-color: #c82333;
     transform: translateY(-2px);
 }
 
 .progress-bar {
     width: 100%;
     height: 10px;
-    background: #e0e0e0;
-    border-radius: 5px;
+    background: #000000;
+    border: 1px dashed #ffffff;
+    border-radius: 0;
     overflow: hidden;
     margin: 20px 0;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: #0066cc;
     width: 0%;
     transition: width 0.3s;
 }
 
 .progress-text {
     text-align: center;
-    color: #666;
+    color: #ffffff;
     font-weight: 600;
+    font-family: 'Courier New', monospace;
 }
 
 /* Quiz */
@@ -220,10 +268,11 @@ header h1 {
 }
 
 .quiz-question {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
     color: white;
     padding: 30px;
-    border-radius: 15px;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -231,6 +280,7 @@ header h1 {
 .quiz-question h2 {
     font-size: 2em;
     margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
 }
 
 .quiz-options {
@@ -241,18 +291,20 @@ header h1 {
 
 .quiz-option {
     padding: 15px 20px;
-    background: #f5f5f5;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    background: #000000;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     cursor: pointer;
     transition: all 0.3s;
     font-size: 1.1em;
     text-align: center;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
 }
 
 .quiz-option:hover {
-    background: #e8e8e8;
-    border-color: #667eea;
+    background: rgba(255,255,255,0.1);
+    border-color: #0066cc;
     transform: translateX(5px);
 }
 
@@ -300,7 +352,8 @@ header h1 {
     text-align: center;
     font-size: 1.3em;
     font-weight: 600;
-    color: #667eea;
+    color: #0066cc;
+    font-family: 'Courier New', monospace;
 }
 
 /* Verb Conjugation */
@@ -312,36 +365,42 @@ header h1 {
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
-    color: #333;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
 }
 
 .select-input {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     font-size: 1em;
-    background: white;
+    background: #000000;
+    color: #ffffff;
     cursor: pointer;
+    font-family: 'Courier New', monospace;
 }
 
 .select-input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #0066cc;
 }
 
 .verb-conjugation {
-    background: #f8f9fa;
+    background: #000000;
     padding: 30px;
-    border-radius: 15px;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     margin: 20px 0;
     min-height: 200px;
+    color: #ffffff;
 }
 
 .verb-placeholder {
     text-align: center;
-    color: #999;
+    color: #ffffff;
     font-size: 1.1em;
+    font-family: 'Courier New', monospace;
 }
 
 .conjugation-table {
@@ -349,15 +408,18 @@ header h1 {
     border-collapse: collapse;
 }
 
-.conjugation-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e0e0e0;
-}
 
 .conjugation-table td:first-child {
     font-weight: 600;
-    color: #667eea;
+    color: #0066cc;
     width: 150px;
+    font-family: 'Courier New', monospace;
+}
+
+.conjugation-table td {
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+    border-bottom: 1px dashed #ffffff;
 }
 
 .conjugation-table tr:last-child td {
@@ -372,7 +434,8 @@ header h1 {
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
-    color: #333;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
 }
 
 .tense-buttons {
@@ -385,23 +448,26 @@ header h1 {
     flex: 1;
     min-width: 120px;
     padding: 12px;
-    border: 2px solid #e0e0e0;
-    background: white;
-    border-radius: 10px;
+    border: 2px dashed #ffffff;
+    background: #000000;
+    border-radius: 0;
     cursor: pointer;
     font-size: 1em;
     transition: all 0.3s;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
 }
 
 .tense-btn:hover {
-    border-color: #667eea;
-    color: #667eea;
+    border-color: #0066cc;
+    color: #0066cc;
+    background: rgba(0, 102, 204, 0.1);
 }
 
 .tense-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-color: #667eea;
+    background: rgba(0, 102, 204, 0.3);
+    color: #ffffff;
+    border-color: #0066cc;
 }
 
 /* Progress */
@@ -413,12 +479,13 @@ header h1 {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
     color: white;
     padding: 30px;
-    border-radius: 15px;
+    border: 2px dashed #ffffff;
+    border-radius: 0;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
 }
 
 .stat-card h3 {
