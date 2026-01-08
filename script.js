@@ -417,6 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFlashcards();
     setupQuiz();
     setupVerbs();
+    setupProgress();
     updateProgress();
     
     // Load voices on page load (helps with voice selection)
@@ -727,18 +728,14 @@ function showVerbConjugation() {
 }
 
 // Progress tracking
-function updateProgress() {
-    document.getElementById('stat-cards').textContent = stats.cardsStudied || 0;
+function setupProgress() {
+    const resetBtn = document.getElementById('reset-btn');
     
-    const quizPercentage = stats.quizTotal > 0 
-        ? Math.round((stats.quizCorrect / stats.quizTotal) * 100) 
-        : 0;
-    document.getElementById('stat-quiz').textContent = quizPercentage + '%';
+    if (!resetBtn) {
+        return;
+    }
     
-    document.getElementById('stat-verbs').textContent = stats.verbsLearned.size || 0;
-    
-    // Reset button
-    document.getElementById('reset-btn').addEventListener('click', () => {
+    resetBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset all progress?')) {
             stats = {
                 cardsStudied: 0,
@@ -750,5 +747,16 @@ function updateProgress() {
             updateProgress();
         }
     });
+}
+
+function updateProgress() {
+    document.getElementById('stat-cards').textContent = stats.cardsStudied || 0;
+    
+    const quizPercentage = stats.quizTotal > 0 
+        ? Math.round((stats.quizCorrect / stats.quizTotal) * 100) 
+        : 0;
+    document.getElementById('stat-quiz').textContent = quizPercentage + '%';
+    
+    document.getElementById('stat-verbs').textContent = stats.verbsLearned.size || 0;
 }
 
